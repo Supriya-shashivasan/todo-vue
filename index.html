@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TO DO app</title>
+	<link rel="stylesheet" type="text/css" href="assets/styles/style.css">
+</head>
+<body>
+<div id="todo-list">
+  <div class="container">
+    <h1 class="left"> MY TODO LIST </h1>
+    <br><br>
+    <button class="right addnew" @click="showingAddModal=true;">Add new</button>
+    <div class="clear"></div>
+    <hr>
+		<p class="errorMessage" v-if="errorMessage">
+			{{errorMessage}}
+		</p>
+
+		<p class="successMessage" v-if="successMessage">
+			{{successMessage}}
+		</p>
+
+    <div class="list">
+        <ul v-for="task in tasks">
+          <li> {{task.title}} &nbsp; <button @click="showingEditModal=true; selectTask(task)"> Edit </button> &nbsp; <button @click="showingDeleteModal=true; selectTask(task)"> Delete </button> </li>
+					<p> {{task.comment}} </p>
+					<hr>
+        <ul>
+    </div>
+  </div>
+  <div id="addModal" class="modal" v-if="showingAddModal">
+    <div class="modal-content">
+      <h2> Add new todo </h1>
+      <form class="insertform">
+        Title:
+        <input type="text" name="title" v-model="newTask.title" placeholder="Do dishes...." ><br><br>
+        Comment:
+        <input type="text" name="commment" v-model="newTask.comment" placeholder="soap in basket" ><br><br>
+
+      </form>
+  		<button id="modalClose" @click="showingAddModal=false; saveTask();">Save</button></div>
+    </div>
+
+		<div id="editModal" class="modal" v-if="showingEditModal">
+	    <div class="modal-content">
+	      <h2> Edit todo </h1>
+	      <form class="insertform">
+	        Title:
+	        <input type="text" name="title" v-model="clickedTask.title" placeholder="Do dishes...." ><br><br>
+	        Comment:
+	        <input type="text" name="commment" v-model="clickedTask.comment" placeholder="soap in basket" ><br><br>
+
+	      </form>
+	  		<button id="modalClose" @click="showingEditModal=false; updateTask()">Update</button></div>
+	    </div>
+
+			<div id="deleteModal" class="modal" v-if="showingDeleteModal">
+		    <div class="modal-content">
+		      <h2> Delete todo </h1>
+						<br>
+						<h3> Are you sure you want to delete this task? </h3>
+						<p> {{clickedTask.title}} </p>
+						<button id="modalClose" @click="showingDeleteModal=false; deleteTask()">Yes</button> &nbsp;
+		  		  <button id="modalClose" @click="showingDeleteModal=false;">No</button></div>
+		    </div>
+	  </div>
+</body>
+
+<script src="assets/js/jquery.js"></script>
+<script src="assets/js/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="assets/js/site.js"></script>
+
+
+</html>
